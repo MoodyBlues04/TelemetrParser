@@ -34,11 +34,11 @@ class ParsedChannel(models.Model):
     @classmethod
     def add_rows(cls, parsed_rows: list[TableRow]) -> None:
         for parsed_row in parsed_rows:
-            cls.add_row(parsed_row)
+            cls.add_or_update_row(parsed_row)
 
     @classmethod
-    def add_row(cls, parsed_row: TableRow) -> None:
-        cls.objects.create(
+    def add_or_update_row(cls, parsed_row: TableRow) -> None:
+        cls.objects.update_or_create(
             name=parsed_row.name,
             subscribers=parsed_row.subscribers,
             post_views=parsed_row.post_views,
