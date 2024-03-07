@@ -1,0 +1,7 @@
+pygsheets
+python-dotenv
+requests~=2.31.0
+beautifulsoup4
+SQLAlchemy
+Django~=5.0.1
+djangorestframework~=3.14.0

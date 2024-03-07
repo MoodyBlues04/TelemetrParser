@@ -1,0 +1,7 @@
+venv/
+credentials.json
+.env
+*.zip
+.idea/
+*/__pycache__
+database.db
