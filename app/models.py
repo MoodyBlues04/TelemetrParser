@@ -4,6 +4,7 @@ from app.services.dto import TableRow
 
 
 class ParsedChannel(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     subscribers = models.IntegerField()
     increment = models.IntegerField()
@@ -44,6 +45,7 @@ class ParsedChannel(models.Model):
             post_views=parsed_row.post_views,
             er=parsed_row.er,
             references=parsed_row.references,
+            increment=parsed_row.increment,
             geo=parsed_row.geo,
             category=parsed_row.category
         )
