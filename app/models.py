@@ -19,8 +19,8 @@ class ParsedChannel(models.Model):
             return True
         channel = cls.get_by_name(parsed_row.name)
         for key, val in parsed_row.__dict__.items():
-            if channel.__dict__.get(key) != val:
-                print(key, val, channel.__dict__.get(key))
+            model_val = channel.__dict__.get(key)
+            if model_val is not None and model_val != val:
                 return True
         return False
 
