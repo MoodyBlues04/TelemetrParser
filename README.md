@@ -9,4 +9,4 @@ Simple python app to autommaticly parse channels from telemetr.io and upload to 
 5. Execute ```cp .env.example .env``` and fill environmental variables.
 
 # Usage
-- Run ```python main.py ``` to parse data from telemetr.io to google sheet specified in ```.env```
+- Run ```python manage.py parse_telemetr ``` to parse data from telemetr.io to google sheet specified in ```.env```
