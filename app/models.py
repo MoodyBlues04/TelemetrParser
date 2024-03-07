@@ -20,6 +20,7 @@ class ParsedChannel(models.Model):
         channel = cls.get_by_name(parsed_row.name)
         for key, val in parsed_row.__dict__.items():
             if channel.__dict__.get(key) != val:
+                print(key, val, channel.__dict__.get(key))
                 return True
         return False
 
