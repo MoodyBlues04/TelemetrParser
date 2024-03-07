@@ -4,7 +4,7 @@ from app.services.dto import TableRow
 
 
 class ParsedChannel(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     subscribers = models.IntegerField()
     increment = models.IntegerField()
     post_views = models.IntegerField()
@@ -41,11 +41,13 @@ class ParsedChannel(models.Model):
     def add_or_update_row(cls, parsed_row: TableRow) -> None:
         cls.objects.update_or_create(
             name=parsed_row.name,
-            subscribers=parsed_row.subscribers,
-            post_views=parsed_row.post_views,
-            er=parsed_row.er,
-            references=parsed_row.references,
-            increment=parsed_row.increment,
-            geo=parsed_row.geo,
-            category=parsed_row.category
+            defaults={
+                "subscribers": parsed_row.subscribers,
+                "post_views": parsed_row.post_views,
+                "er": parsed_row.er,
+                "references": parsed_row.references,
+                "increment": parsed_row.increment,
+                "geo": parsed_row.geo,
+                "category": parsed_row.category
+            }
         )
