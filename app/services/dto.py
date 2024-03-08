@@ -8,6 +8,7 @@ class TableRow:
     references: int
     geo: str
     category: str
+    image: str
 
     def __str__(self):
         return str(self.__dict__)

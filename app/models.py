@@ -4,7 +4,8 @@ from app.services.dto import TableRow
 
 
 class ParsedChannel(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
+    image = models.TextField()
     subscribers = models.IntegerField()
     increment = models.IntegerField()
     post_views = models.IntegerField()
@@ -13,11 +14,14 @@ class ParsedChannel(models.Model):
     geo = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
 
+    class Meta:
+        unique_together = ('name', 'image')
+
     @classmethod
     def row_updated(cls, parsed_row: TableRow) -> bool:
-        if not cls.row_exists(parsed_row):
+        channel = cls.get_by_row(parsed_row)
+        if channel is None:
             return True
-        channel = cls.get_by_name(parsed_row.name)
         for key, val in parsed_row.__dict__.items():
             model_val = channel.__dict__.get(key)
             if model_val is not None and model_val != val:
@@ -25,12 +29,8 @@ class ParsedChannel(models.Model):
         return False
 
     @classmethod
-    def row_exists(cls, parsed_row: TableRow) -> bool:
-        return cls.get_by_name(parsed_row.name) is not None
-
-    @classmethod
-    def get_by_name(cls, name: str) -> ParsedChannel|None:
-        return cls.objects.filter(name=name).first()
+    def get_by_row(cls, parsed_row: TableRow) -> ParsedChannel | None:
+        return cls.objects.filter(name=parsed_row.name, image=parsed_row.image).first()
 
     @classmethod
     def add_rows(cls, parsed_rows: list[TableRow]) -> None:
@@ -41,6 +41,7 @@ class ParsedChannel(models.Model):
     def add_or_update_row(cls, parsed_row: TableRow) -> None:
         cls.objects.update_or_create(
             name=parsed_row.name,
+            image=parsed_row.image,
             defaults={
                 "subscribers": parsed_row.subscribers,
                 "post_views": parsed_row.post_views,

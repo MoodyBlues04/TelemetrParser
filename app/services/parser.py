@@ -31,8 +31,11 @@ class TelemetrParser:
         try:
             parsed_row.index = self.__parse_int(row_cells[0].text)
             parsed_row.name = row_cells[1].find('a', class_='channel-name__title').text.strip()
+            parsed_row.image = row_cells[1].find('img', class_='avatar').get('src')
             parsed_row.subscribers = self.__parse_int(row_cells[2].find('span').text)
             parsed_row.increment = self.__parse_int(row_cells[3].text)
+            if row_cells[3].find('i', class_='icon-carret-down-line') is not None:
+                parsed_row.increment *= -1
             parsed_row.post_views = self.__parse_int(row_cells[4].text)
             parsed_row.er = self.__parse_float(row_cells[5].text)
             parsed_row.references = self.__parse_int(row_cells[6].text)
