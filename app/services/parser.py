@@ -78,7 +78,6 @@ class TelemetrApi:
     def get_channels_page(self, category: str = CATEGORY_CRYPTO, country: str = COUNTRY_RUS, page: int = 1) -> str:
         """ Returns webpage with tg channels data """
         url = f'{self.__BASE_URL}/category/{category}?countries={country}&sort=participants_count&page={page}'
-        print(url)
         return self.__get(url).text
 
     def __get(self, url: str) -> requests.Response:
