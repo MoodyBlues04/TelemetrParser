@@ -5,9 +5,9 @@ from app.models import ParsedChannel
 
 
 class TelemetrParsingFacade:
-    def __init__(self, sheet_id: str) -> None:
+    def __init__(self, sheet_id: str, category: str) -> None:
         self.__google_sheets_api = GoogleSheetsApi(sheet_id, self.__worksheet_title())
-        self.__parser = TelemetrParser()
+        self.__parser = TelemetrParser(category)
 
     def parse_telemetr_to_sheets(self) -> None:
         table_rows = self.__parser.parse()

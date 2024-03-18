@@ -7,8 +7,11 @@ from .dto import TableRow
 
 
 class TelemetrParser:
+    def __init__(self, category: str) -> None:
+        self.__category = category
+
     def parse(self) -> list[TableRow]:
-        channels_iterator = TelemetrChannelsIterator()
+        channels_iterator = TelemetrChannelsIterator(category=self.__category)
 
         parsed_rows = []
         for page_index, page in enumerate(channels_iterator):
