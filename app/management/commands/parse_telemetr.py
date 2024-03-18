@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
         sheet_id = options.get('sheet_id', getenv('SHEET_ID'))
         category = options.get('category')
-        
+
         TelemetrParsingFacade(sheet_id, category).parse_telemetr_to_sheets()
 
     def __validate_options(self, options: dict) -> None:
