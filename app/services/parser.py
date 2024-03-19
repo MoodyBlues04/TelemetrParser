@@ -24,11 +24,13 @@ class TelemetrParser:
 
             for row_idx, table_row in enumerate(table_rows):
                 if row_idx % 10 == 0:
-                    print(f"Row index: {page_index}/{len(table_rows)}")
+                    print(f"Row index: {row_idx}/{len(table_rows)}")
                 row_cells = table_row.findAll('td')
                 parsed_row = self.__make_parsed_row(row_cells)
                 if ParsedChannel.row_updated(parsed_row):
                     parsed_rows.append(parsed_row)
+
+            break
 
         return parsed_rows
 
