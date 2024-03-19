@@ -42,8 +42,12 @@ class TelemetrParser:
             name_attr = row_cells[1].find('div', class_='channel-name__attribute')
             channel_tag = name_attr.text
             if channel_tag != 'Канал закрыт':
-                is_inactive = is_channel_inactive(channel_tag)
-                status = TableRow.STATUS_INACTIVE if is_inactive else TableRow.STATUS_ACTIVE
+                try:
+                    is_inactive = is_channel_inactive(channel_tag)
+                    status = TableRow.STATUS_INACTIVE if is_inactive else TableRow.STATUS_ACTIVE
+                except Exception as e:
+                    print('Error: ' + str(e), channel_tag)
+                    status = TableRow.STATUS_CLOSED
             else:
                 status = TableRow.STATUS_CLOSED
 
