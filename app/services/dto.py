@@ -1,4 +1,8 @@
 class TableRow:
+    STATUS_ACTIVE = 'active'
+    STATUS_INACTIVE = 'inavtive'
+    STATUS_CLOSED = 'closed'
+
     index: int
     name: str
     subscribers: int
@@ -9,6 +13,7 @@ class TableRow:
     geo: str
     category: str
     image: str
+    status: str
 
     def __str__(self):
         return str(self.__dict__)

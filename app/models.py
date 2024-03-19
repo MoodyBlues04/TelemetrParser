@@ -13,6 +13,7 @@ class ParsedChannel(models.Model):
     references = models.IntegerField()
     geo = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
+    status = models.CharField(max_length=255)
 
     class Meta:
         unique_together = ('name', 'image')
@@ -49,6 +50,7 @@ class ParsedChannel(models.Model):
                 "references": parsed_row.references,
                 "increment": parsed_row.increment,
                 "geo": parsed_row.geo,
-                "category": parsed_row.category
+                "category": parsed_row.category,
+                "status": parsed_row.status
             }
         )

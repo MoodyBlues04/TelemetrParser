@@ -4,6 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 from app.models import ParsedChannel
 from .dto import TableRow
+from tg_api import TgApi
+import asyncio
 
 
 class TelemetrParser:
@@ -32,9 +34,14 @@ class TelemetrParser:
     def __make_parsed_row(self, row_cells: list) -> TableRow:
         parsed_row = TableRow()
         try:
-            print(row_cells[1])
-            print(row_cells[1].find('div', class_='channel-name__attribute'))
-            print(row_cells[1].find('div', class_='channel-name__attribute').find('a').text)
+            name_attr = row_cells[1].find('div', class_='channel-name__attribute')
+            tg_tag = name_attr.text
+            print('tg tag:', tg_tag)
+            api = TgApi()
+            channel_id = asyncio.run(api.get_channel_id(tg_tag))
+            print(channel_id)
+            last_message = asyncio.run(api.get_last_message_date(channel_id))
+            print(last_message)
             exit(0)
 
             parsed_row.index = self.__parse_int(row_cells[0].text)
