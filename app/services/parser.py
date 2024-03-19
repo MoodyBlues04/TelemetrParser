@@ -32,9 +32,9 @@ class TelemetrParser:
     def __make_parsed_row(self, row_cells: list) -> TableRow:
         parsed_row = TableRow()
         try:
-            print(row_cells[1].find('a', class_='flex items-center').text)
+            print(row_cells[1].find('div', class_='channel-name__attribute').find('a').text)
             exit(0)
-            
+
             parsed_row.index = self.__parse_int(row_cells[0].text)
             parsed_row.name = row_cells[1].find('a', class_='channel-name__title').text.strip()
             parsed_row.image = row_cells[1].find('img', class_='avatar').get('src')
