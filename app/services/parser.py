@@ -18,7 +18,7 @@ class TelemetrParser:
 
         parsed_rows = []
         for page_index, page in enumerate(channels_iterator):
-            if page_index < 3: continue
+            if page_index == 3: break
             print(f"Parsing page: {page_index}")
 
             bs = BeautifulSoup(page, "html.parser")
@@ -33,6 +33,7 @@ class TelemetrParser:
                 parsed_row = self.__make_parsed_row(row_cells)
                 if ParsedChannel.row_updated(parsed_row):
                     parsed_rows.append(parsed_row)
+
 
         return parsed_rows
 
