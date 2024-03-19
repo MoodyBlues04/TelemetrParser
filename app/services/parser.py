@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from app.models import ParsedChannel
 from .dto import TableRow
-from tg_api import TgApi
+from .tg_api import TgApi
 import asyncio
 
 
