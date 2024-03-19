@@ -18,6 +18,7 @@ class TelemetrParser:
 
         parsed_rows = []
         for page_index, page in enumerate(channels_iterator):
+            if page_index < 3: continue
             print(f"Parsing page: {page_index}")
 
             bs = BeautifulSoup(page, "html.parser")
