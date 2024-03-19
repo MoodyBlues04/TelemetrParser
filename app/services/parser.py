@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import time
 from os import getenv
 import requests
 from bs4 import BeautifulSoup
@@ -30,6 +32,8 @@ class TelemetrParser:
                 if ParsedChannel.row_updated(parsed_row):
                     parsed_rows.append(parsed_row)
 
+            time.sleep(2) # for tg api not to fail
+
         return parsed_rows
 
     def __make_parsed_row(self, row_cells: list) -> TableRow:
@@ -37,6 +41,8 @@ class TelemetrParser:
         try:
             name_attr = row_cells[1].find('div', class_='channel-name__attribute')
             channel_tag = name_attr.text
+            print(name_attr.find('a'))
+            exit(0)
             if channel_tag != 'Канал закрыт':
                 is_inactive = is_channel_inactive(channel_tag)
                 status = TableRow.STATUS_INACTIVE if is_inactive else TableRow.STATUS_ACTIVE
