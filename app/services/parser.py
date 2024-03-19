@@ -27,7 +27,7 @@ class TelemetrParser:
             for row_idx, table_row in enumerate(table_rows):
                 if row_idx % 10 == 0:
                     print(f"Row index: {row_idx}/{len(table_rows)}")
-                    time.sleep(1)  # rate limiting
+                    time.sleep(3)  # rate limiting
                 row_cells = table_row.findAll('td')
                 parsed_row = self.__make_parsed_row(row_cells)
                 if ParsedChannel.row_updated(parsed_row):
