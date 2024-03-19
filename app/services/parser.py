@@ -4,8 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from app.models import ParsedChannel
 from .dto import TableRow
-from .tg_api import TgApi
-import asyncio
+from .tg_api import is_channel_inactive
 
 
 class TelemetrParser:
@@ -35,14 +34,15 @@ class TelemetrParser:
         parsed_row = TableRow()
         try:
             name_attr = row_cells[1].find('div', class_='channel-name__attribute')
-            tg_tag = name_attr.text
-            print('tg tag:', tg_tag)
-            api = TgApi()
-            last_message = asyncio.run(api.is_channel_inactive(tg_tag))
-            print(last_message)
-            exit(0)
+            channel_tag = name_attr.text
+            if channel_tag != 'Канал закрыт':
+                is_inactive = is_channel_inactive(channel_tag)
+                status = TableRow.STATUS_INACTIVE if is_inactive else TableRow.STATUS_ACTIVE
+            else:
+                status = TableRow.STATUS_CLOSED
 
             parsed_row.index = self.__parse_int(row_cells[0].text)
+            parsed_row.status = status
             parsed_row.name = row_cells[1].find('a', class_='channel-name__title').text.strip()
             parsed_row.image = row_cells[1].find('img', class_='avatar').get('src')
             parsed_row.subscribers = self.__parse_int(row_cells[2].find('span').text)
