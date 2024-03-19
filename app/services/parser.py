@@ -41,7 +41,7 @@ class TelemetrParser:
         try:
             name_attr = row_cells[1].find('div', class_='channel-name__attribute')
             channel_tag = name_attr.text
-            print(name_attr.find('a'))
+            print(name_attr.find('a'), name_attr)
             exit(0)
             if channel_tag != 'Канал закрыт':
                 is_inactive = is_channel_inactive(channel_tag)
