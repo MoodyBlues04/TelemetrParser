@@ -14,6 +14,7 @@ class ParsedChannel(models.Model):
     geo = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
+    link = models.CharField(max_length=255, null=True)
 
     class Meta:
         unique_together = ('name', 'image')
@@ -51,6 +52,7 @@ class ParsedChannel(models.Model):
                 "increment": parsed_row.increment,
                 "geo": parsed_row.geo,
                 "category": parsed_row.category,
-                "status": parsed_row.status
+                "status": parsed_row.status,
+                "link": parsed_row.link
             }
         )

@@ -37,7 +37,8 @@ class TelemetrParsingFacade:
             'Упоминания (7d)',
             'ГЕО',
             'Категория',
-            'Статус'
+            'Статус',
+            'Ссылка на канал'
         ]
 
     def __worksheet_title(self) -> str:

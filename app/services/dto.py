@@ -14,6 +14,7 @@ class TableRow:
     category: str
     image: str
     status: str
+    link: str
 
     def __str__(self):
         return str(self.__dict__)
@@ -31,4 +32,5 @@ class TableRow:
             self.category,
             self.image,
             self.status,
+            self.link,
         ]
