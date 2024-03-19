@@ -32,7 +32,9 @@ class TelemetrParser:
     def __make_parsed_row(self, row_cells: list) -> TableRow:
         parsed_row = TableRow()
         try:
-            print(row_cells[1], row_cells[1].find('div', class_='channel-name__attribute'), row_cells[1].find('div', class_='channel-name__attribute').find('a').text)
+            print(row_cells[1])
+            print(row_cells[1].find('div', class_='channel-name__attribute'))
+            print(row_cells[1].find('div', class_='channel-name__attribute').find('a').text)
             exit(0)
 
             parsed_row.index = self.__parse_int(row_cells[0].text)
