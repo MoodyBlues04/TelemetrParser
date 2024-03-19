@@ -5,3 +5,5 @@ beautifulsoup4
 SQLAlchemy
 Django~=5.0.1
 djangorestframework~=3.14.0
+telethon
+asyncio
