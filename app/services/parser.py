@@ -42,10 +42,11 @@ class TelemetrParser:
         try:
             channel_tag = row_cells[1].find('div', class_='channel-name__attribute').text.strip()
             status = self.__get_channel_status(channel_tag)
+            link = f"https://t.me/{channel_tag}" if status != TableRow.STATUS_CLOSED else None
 
             parsed_row.index = self.__parse_int(row_cells[0].text)
             parsed_row.status = status
-            parsed_row.link = f"https://t.me/{channel_tag}"
+            parsed_row.link = link
             parsed_row.name = row_cells[1].find('a', class_='channel-name__title').text.strip()
             parsed_row.image = row_cells[1].find('img', class_='avatar').get('src')
             parsed_row.subscribers = self.__parse_int(row_cells[2].find('span').text)
