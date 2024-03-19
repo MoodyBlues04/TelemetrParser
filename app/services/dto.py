@@ -1,6 +1,6 @@
 class TableRow:
     STATUS_ACTIVE = 'active'
-    STATUS_INACTIVE = 'inavtive'
+    STATUS_INACTIVE = 'inactive'
     STATUS_CLOSED = 'closed'
 
     index: int

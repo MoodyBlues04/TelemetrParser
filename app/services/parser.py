@@ -23,6 +23,8 @@ class TelemetrParser:
             table_rows = tbody.findAll('tr')
 
             for row_idx, table_row in enumerate(table_rows):
+                if row_idx % 10 == 0:
+                    print(f"Row index: {page_index}/{len(table_rows)}")
                 row_cells = table_row.findAll('td')
                 parsed_row = self.__make_parsed_row(row_cells)
                 if ParsedChannel.row_updated(parsed_row):
@@ -40,8 +42,6 @@ class TelemetrParser:
                 status = TableRow.STATUS_INACTIVE if is_inactive else TableRow.STATUS_ACTIVE
             else:
                 status = TableRow.STATUS_CLOSED
-
-            print(status)
 
             parsed_row.index = self.__parse_int(row_cells[0].text)
             parsed_row.status = status
