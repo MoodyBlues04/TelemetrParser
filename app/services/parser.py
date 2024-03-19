@@ -38,9 +38,7 @@ class TelemetrParser:
             tg_tag = name_attr.text
             print('tg tag:', tg_tag)
             api = TgApi()
-            channel_id = asyncio.run(api.get_channel_id(tg_tag))
-            print(channel_id)
-            last_message = asyncio.run(api.get_last_message_date(channel_id))
+            last_message = asyncio.run(api.is_channel_inactive(tg_tag))
             print(last_message)
             exit(0)
 
