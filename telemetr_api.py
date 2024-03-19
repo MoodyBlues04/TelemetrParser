@@ -5,7 +5,7 @@ import pytz
 from dotenv import load_dotenv
 from os import getenv
 
-load_dotenv()
+load_dotenv('.env')
 
 utc = pytz.UTC
 
