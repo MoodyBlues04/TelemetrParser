@@ -19,4 +19,16 @@ class TableRow:
         return str(self.__dict__)
 
     def to_array(self) -> list:
-        return list(self.__dict__.values())
+        return [
+            self.index,
+            self.name,
+            self.subscribers,
+            self.increment,
+            self.post_views,
+            self.er,
+            self.references,
+            self.geo,
+            self.category,
+            self.image,
+            self.status,
+        ]
