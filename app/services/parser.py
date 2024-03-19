@@ -30,8 +30,6 @@ class TelemetrParser:
                 if ParsedChannel.row_updated(parsed_row):
                     parsed_rows.append(parsed_row)
 
-            break
-
         return parsed_rows
 
     def __make_parsed_row(self, row_cells: list) -> TableRow:
