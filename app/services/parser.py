@@ -27,29 +27,19 @@ class TelemetrParser:
             for row_idx, table_row in enumerate(table_rows):
                 if row_idx % 10 == 0:
                     print(f"Row index: {row_idx}/{len(table_rows)}")
+                    time.sleep(1)  # rate limiting
                 row_cells = table_row.findAll('td')
                 parsed_row = self.__make_parsed_row(row_cells)
                 if ParsedChannel.row_updated(parsed_row):
                     parsed_rows.append(parsed_row)
-
-            time.sleep(2) # for tg api not to fail
 
         return parsed_rows
 
     def __make_parsed_row(self, row_cells: list) -> TableRow:
         parsed_row = TableRow()
         try:
-            name_attr = row_cells[1].find('div', class_='channel-name__attribute')
-            channel_tag = name_attr.text
-            if channel_tag != 'Канал закрыт':
-                try:
-                    is_inactive = is_channel_inactive(channel_tag)
-                    status = TableRow.STATUS_INACTIVE if is_inactive else TableRow.STATUS_ACTIVE
-                except Exception as e:
-                    print('Error: ' + str(e), channel_tag)
-                    status = TableRow.STATUS_CLOSED
-            else:
-                status = TableRow.STATUS_CLOSED
+            channel_tag = row_cells[1].find('div', class_='channel-name__attribute').text.strip()
+            status = self.__get_channel_status(channel_tag)
 
             parsed_row.index = self.__parse_int(row_cells[0].text)
             parsed_row.status = status
@@ -69,6 +59,17 @@ class TelemetrParser:
         except Exception as e:
             print(e)
             return parsed_row
+
+    def __get_channel_status(self, channel_tag: str) -> str:
+        if channel_tag != 'Канал закрыт':
+            try:
+                is_inactive = is_channel_inactive(channel_tag)
+                return TableRow.STATUS_INACTIVE if is_inactive else TableRow.STATUS_ACTIVE
+            except Exception as e:
+                print(f'Non existing channel: {channel_tag}')
+                return TableRow.STATUS_CLOSED
+        else:
+            return TableRow.STATUS_CLOSED
 
     def __parse_int(self, text: str) -> int:
         return int(text.replace(' ', ''))
