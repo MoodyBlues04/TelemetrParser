@@ -41,6 +41,8 @@ class TelemetrParser:
             else:
                 status = TableRow.STATUS_CLOSED
 
+            print(status)
+
             parsed_row.index = self.__parse_int(row_cells[0].text)
             parsed_row.status = status
             parsed_row.name = row_cells[1].find('a', class_='channel-name__title').text.strip()
