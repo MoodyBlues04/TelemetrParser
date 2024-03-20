@@ -6,12 +6,13 @@ import requests
 from bs4 import BeautifulSoup
 from app.models import ParsedChannel
 from .dto import TableRow
-from .tg_api import is_channel_inactive
+from .tg_parser import TgParser
 
 
 class TelemetrParser:
     def __init__(self, category: str) -> None:
         self.__category = category
+        self.__tg_parser = TgParser()
 
     def parse(self) -> list[TableRow]:
         channels_iterator = TelemetrChannelsIterator(category=self.__category)
@@ -66,14 +67,17 @@ class TelemetrParser:
     def __get_channel_status(self, channel_tag: str) -> str:
         if channel_tag != 'Канал закрыт':
             try:
-                is_inactive = is_channel_inactive(channel_tag)
-                return TableRow.STATUS_INACTIVE if is_inactive else TableRow.STATUS_ACTIVE
+                is_active = self.__tg_parser.is_active(self.__get_channel_preview_link(channel_tag))
+                return TableRow.STATUS_ACTIVE if is_active else TableRow.STATUS_INACTIVE
             except Exception as e:
                 print(str(e))
                 print(f'Non existing channel: {channel_tag}')
                 return TableRow.STATUS_CLOSED
         else:
             return TableRow.STATUS_CLOSED
+
+    def __get_channel_preview_link(self, channel_tag: str) -> str:
+        return f'https://t.me/s/{channel_tag}'
 
     def __parse_int(self, text: str) -> int:
         return int(text.replace(' ', ''))
