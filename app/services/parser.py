@@ -100,6 +100,7 @@ class TelemetrApi:
 
     def __init__(self) -> None:
         self.__proxy = dict()
+        print(self.__make_proxy_url_from_env())
         if getenv('PROXY_HOST') is not None:
             self.__proxy = {
                 'https': self.__make_proxy_url_from_env()
