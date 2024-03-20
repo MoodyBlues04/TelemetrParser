@@ -13,9 +13,9 @@ class TgParser:
             last_activity_expected = datetime.now() - timedelta(days=7)
 
         message_dates = self.get_message_dates(preview_link)
+        if len(message_dates) == 0:
+            return False
         last_date = max(message_dates)
-
-        print(last_date)
 
         last_activity_expected = self.__utc.localize(last_activity_expected)
         last_date = self.__utc.localize(last_date)
