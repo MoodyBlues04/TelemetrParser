@@ -112,7 +112,7 @@ class TelemetrApi:
         return self.__get(url).text
 
     def __get(self, url: str) -> requests.Response:
-        return requests.get(url, proxies=self.__proxy)
+        return requests.get(url, proxies=self.__proxy, headers={'User-Agent': 'Chrome'})
 
     def __make_proxy_url_from_env(self) -> str:
         return f"http://{getenv('PROXY_USER')}:{getenv('PROXY_PASSWORD')}@{getenv('PROXY_HOST')}:{getenv('PROXY_PORT')}"
