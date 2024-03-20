@@ -18,6 +18,7 @@ class TgParser:
         print(last_date)
 
         last_activity_expected = self.__utc.localize(last_activity_expected)
+        last_date = self.__utc.localize(last_date)
 
         return last_date >= last_activity_expected
 
