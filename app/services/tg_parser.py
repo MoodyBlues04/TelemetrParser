@@ -15,6 +15,8 @@ class TgParser:
         message_dates = self.get_message_dates(preview_link)
         last_date = max(message_dates)
 
+        print(last_date)
+
         last_activity_expected = self.__utc.localize(last_activity_expected)
 
         return last_date >= last_activity_expected
