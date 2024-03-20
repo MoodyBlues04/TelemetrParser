@@ -31,7 +31,7 @@ class TgApi:
 
         last_activity_expected = utc.localize(last_activity_expected)
 
-        return last_message_date >= last_activity_expected
+        return last_message_date < last_activity_expected
 
     async def get_channel_id(self, channel_tag: str) -> int:
         channel = await self.__client.get_entity(channel_tag)
