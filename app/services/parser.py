@@ -69,6 +69,7 @@ class TelemetrParser:
                 is_inactive = is_channel_inactive(channel_tag)
                 return TableRow.STATUS_INACTIVE if is_inactive else TableRow.STATUS_ACTIVE
             except Exception as e:
+                print(str(e))
                 print(f'Non existing channel: {channel_tag}')
                 return TableRow.STATUS_CLOSED
         else:
