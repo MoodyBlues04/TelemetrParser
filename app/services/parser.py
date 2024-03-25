@@ -30,7 +30,7 @@ class TelemetrParser:
                     print(f"Row index: {row_idx}/{len(table_rows)}")
                 row_cells = table_row.findAll('td')
                 parsed_row = self.__make_parsed_row(row_cells)
-                if ParsedChannel.row_updated(parsed_row):
+                if ParsedChannel.get_by_row(parsed_row) is None:
                     parsed_rows.append(parsed_row)
 
 
